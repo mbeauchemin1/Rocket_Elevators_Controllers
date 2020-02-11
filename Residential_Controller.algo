@@ -1,0 +1,32 @@
+SEQUENCE callElevatorButtonIsPressed using callElevatorButton
+    call callElevatorButtonActive
+    call findElevator
+ENDSEQUENCE
+
+SEQUENCE callElevatorButtonActive using callElevatorButton
+    set callElevatorButton to active
+ENDSEQUENCE
+
+SEQUENCE findElevator using floorList, direction, elevatorPosition, callElevatorButtonPosition
+    if elevator is at same floor as callElevatorButton, do nothing
+        else get floorPosition of callElevatorButton
+    endif
+
+    
+    
+    
+    
+    
+   
+
+
+SEQUENCE ElevatorIsAtDestination using currentFloorPosition, callElevatorButton, door
+    call callElevatorButtonNotActive
+    call doorOpen
+    call doorClose
+ENDSEQUENCE
+
+SEQUENCE floorRequestButtonPressed using currentFloorPosition, floorRequestButton
+    call floorRequestButtonActive
+    call moveElevator
+ENDSEQUENCE
