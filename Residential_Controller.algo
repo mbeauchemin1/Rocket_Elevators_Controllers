@@ -1,32 +1,162 @@
-SEQUENCE callElevatorButtonIsPressed using callElevatorButton
-    call callElevatorButtonActive
-    call findElevator
-ENDSEQUENCE
+'what happen when the elevator request button is pressed'
 
-SEQUENCE callElevatorButtonActive using callElevatorButton
-    set callElevatorButton to active
-ENDSEQUENCE
+sequence callElevatorButtonOn using call_ elevator button, 
+    if call elevator button is pressed then
+        set button as active
+    endif
+    call elevatorRequest
+endsequence
 
-SEQUENCE findElevator using floorList, direction, elevatorPosition, callElevatorButtonPosition
-    if elevator is at same floor as callElevatorButton, do nothing
-        else get floorPosition of callElevatorButton
+'what happen with the call elevator button when the call has been answered'
+
+sequence callElevatorButtonOff using call_ elevator button
+    if elevator request is answered then
+        set call elevator button as not active
+    endif
+endsequence
+
+'when we first request an elevator with call elevator button'
+
+sequence elevatorRequest using floor, directions
+    call findElevator using floor, direction
+    call request using elevator, floor
+endsequence
+
+'what the controller compute to find an elevator'
+
+sequence findElevator using floor, direction
+    init elevator1 to null
+    init elevator2 to null
+
+    for each elevator in elevatorList
+        if direction is up AND elevator status is moving up AND elevator position < than position AND elevator floor goal is > position 
+            set elevator1 to 4
+            set elevator2 to 4
+        else if direction is down AND elevator status is moving down AND elevator position is > than position AND elevator floor goal is < than current floor
+            set elevator1 to 3
+            set elevator2 to 3
+        else  if elevator status = idle and elevator floor = floor then
+            set elevator1 to 2
+            set elevator2 to 2
+        else if elevator status is idle then
+            set elevator1 to 1
+            set elevator2 to 1
+        endif
+        
+    if elevator1 = elevator2 then
+        call findSmallestGap
+    else 
+        return elevator with greatest value
+    endif
+endsequence
+
+'how the controller find the smallest gap in case the two elevators end up with the same value'
+
+sequence findSmallestGap
+    init elevator1 to null
+    init elevator2 to null
+
+    if elevator1 position is > position
+        compute elevator1 position - position and set to elevator1
+    else if elevator1 position < position
+        compute position - elevator 1 position and set to elevator1
+    else if elevator2 position > position
+        compute elevator2 position - position and set to elevator2
+    else if elevator 2 position < position
+        compute position - elevator2 position and set to elevator2
     endif
 
-    
-    
-    
-    
-    
-   
+    if elevator1 = elevator2 then
+        return elevator1
+    else
+        return elevator with smallest value
+    endif
+endsequence
 
+'what the elevator do when it is called when the controller find one after findElevator '
 
-SEQUENCE ElevatorIsAtDestination using currentFloorPosition, callElevatorButton, door
-    call callElevatorButtonNotActive
-    call doorOpen
-    call doorClose
-ENDSEQUENCE
-
-SEQUENCE floorRequestButtonPressed using currentFloorPosition, floorRequestButton
-    call floorRequestButtonActive
+sequence request using floor, direction
     call moveElevator
-ENDSEQUENCE
+    when elevator reach requested floor
+        call  operateDoor
+    call ElevatorButtonOff
+    call isElevatorFull
+endsequence
+
+'how the elevetor compute how reach the requested floor'
+
+sequence moveElevator using position, floorRequest
+    if floorRequest > position
+        compute floorRequest - position to diff
+            repeat
+                add 1 to posision
+            until elevatorPosition = position + diff
+                return floor
+    else if floorRequest < position
+        compute position - floorRequest to diff
+            repeat
+                add -1 to position
+            until elevatorPosition = position - diff
+                return floor
+    endif
+    call elevatorSpeed
+endsequence
+
+'what the elevator do when requested to open and close the door'
+
+sequence operateDoor using door
+    set door to open
+        if no mouvement set timer to 6 sec then close door
+        else if mouvement is detected set timer to 2 sec after no mouvement is detected then close
+        endif
+endsequence
+
+'what happen when the floor request button is pressed (inside the elevator)'
+
+sequence requestElevatorButtonOn using request elevator button, 
+    if request elevator button is pressed then
+        set button as active
+    endif
+    call elevatorRequest
+
+'what happen with the floor request button when the call has been answered'
+
+sequence requestElevatorButtonOff using request elevator button
+    if elevator request is answered then
+        set call elevator button as not active
+    endif
+endsequence
+
+'how to tell if an elevator is full'
+
+sequence isElevatorFull using scale
+    if scale detect weight in elevator > maxWeight
+        keep door open AND set overweight light on
+    else do nothing
+endsequence
+
+'how the elevator speed is managed'
+
+sequence elevatorSpeed using elevator
+    if elevator position = floorRequestPosition -1
+        elevator speed = slow
+    else if elevator position = floorRequestPosition +1
+        elevator speed = slow
+    else elevator speed = normal
+    endif
+endsequence
+
+'how to tell the elevators where at what floor to stay while idle'
+
+sequence elevatorSchedule using time, elevators
+     while elevator status = idle
+        if time > 6 AND time < 8
+            set elevator 1 in elevatorList to floor 3
+            set elevator 2 in elevatorList to floor 7
+        else if time > 16 AND time < 18
+            set elevator 1 in elevatorList to floor 1
+            set elevator 2 in elevatorList to floor 1
+        else stay at last requested floor
+        endif
+    endwhile
+endsequence

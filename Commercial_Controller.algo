@@ -1,0 +1,321 @@
+'how the controller determine which task goes to which column'
+
+sequence columnAttribution using floorRequest, direction, floorList, columnList
+    if direction = down and floorRequest = 1 to 6 in floorList
+        return column1 in columnList
+    else if direction = up and floorRequest = 8 to 26 in floorList
+        return column2 in columnList
+    else if direction = up and floorRequest = 27 to 46 in floorList
+        return column3 in columnList
+    else if direction = up and floorRequest = 47 to 66 in floorList
+        return column4 in columnList
+    else if direction = up and floorRequest = 7 in floorList
+        return column1 in columnList
+    else if direction = down and floorRequest = 7 in floorList
+        return column2, column3, column4 in columnList
+    endif
+endsequence
+
+'what happen when the floor request button is pressed'
+
+sequence floorRequestButtonOn using floor request button
+    if floor request button is pressed then
+        set button as active
+    endif
+    call findElevator
+    call floorRequest
+
+'what happen with the floor request button when the call has been answered'
+
+sequence floorRequestButtonOff using floor elevator button
+    if floor request is answered then
+        set call elevator button as not active
+    endif
+endsequence
+
+'when we first request a floor using request floor button'
+
+sequence floorRequest using floor, direction
+    call columnAttribution
+    call moveElevator
+    call floorRequestButtonOff
+    call operateDoor
+    call isElevatorFull
+endsequence
+
+'what the controller compute to find an elevator'
+
+sequence findElevator using floor, direction, columnAttribution
+    if Column1
+        init elevator1 to null
+        init elevator2 to null
+        init elevator3 to null
+
+        for each elevator in column1
+            if direction is up AND elevator status is moving up AND elevator position < than position
+                set elevator1 to 3
+                set elevator2 to 3
+                set elevator3 to 3
+            else  if elevator status = idle and elevator floor = floor then
+                set elevator1 to 2
+                set elevator2 to 2
+                set elevator3 to 2
+            else if elevator status is idle then
+                set elevator1 to 1
+                set elevator2 to 1
+                set elevator3 to 1
+            endif
+            
+        if 2 or more values are equal then
+            call findSmallestGap1
+        else 
+            return elevator with greatest value
+        endif
+    endif
+    
+    if column2
+        init elevator4 to null
+        init elevator5 to null
+        init elevator6 to null
+
+        for each elevator in column1
+            if direction is down AND elevator status is moving down AND elevator position is > than position
+                set elevator4 to 3
+                set elevator5 to 3
+                set elevator6 to 3
+            else  if elevator status = idle and elevator floor = floor then
+                set elevator4 to 2
+                set elevator5 to 2
+                set elevator6 to 2
+            else if elevator status is idle then
+                set elevator4 to 1
+                set elevator5 to 1
+                set elevator6 to 1
+            endif
+            
+        if 2 or more values are equal then
+            call findSmallestGap2
+        else 
+            return elevator with greatest value
+        endif
+    endif
+
+    if column3
+        init elevator7 to null
+        init elevator8 to null
+        init elevator9 to null
+
+        for each elevator in column1
+            if direction is down AND elevator status is moving down AND elevator position is > than position AND elevator floor goal is < than current floor
+                set elevator7 to 3
+                set elevator8 to 3
+                set elevator9 to 3
+            else  if elevator status = idle and elevator floor = floor then
+                set elevator7 to 2
+                set elevator8 to 2
+                set elevator9 to 2
+            else if elevator status is idle then
+                set elevator7 to 1
+                set elevator8 to 1
+                set elevator9 to 1
+            endif
+            
+        if 2 or more values are equal then
+            call findSmallestGap3
+        else 
+            return elevator with greatest value
+        endif
+    endif
+
+    if column4
+        init elevator10 to null
+        init elevator11 to null
+        init elevator12 to null
+
+        for each elevator in column1
+            if direction is down AND elevator status is moving down AND elevator position is > than position AND elevator floor goal is < than current floor
+                set elevator10 to 3
+                set elevator11 to 3
+                set elevator12 to 3
+            else  if elevator status = idle and elevator floor = floor then
+                set elevator10 to 2
+                set elevator11 to 2
+                set elevator12 to 2
+            else if elevator status is idle then
+                set elevator10 to 1
+                set elevator11 to 1
+                set elevator12 to 1
+            endif
+            
+        if 2 or more values are equal then
+            call findSmallestGap4
+        else 
+            return elevator with greatest value
+        endif
+    endif
+endsequence
+
+'how the controller find the smallest gap in case elevators end up with the same value'
+
+sequence findSmallestGap1
+    init elevator1 to null
+    init elevator2 to null
+    init elevator3 to null
+
+    if elevator1 position is > position
+        compute elevator1 position - position and set to elevator1
+    else if elevator1 position < position
+        compute position - elevator 1 position and set to elevator1
+    else if elevator2 position > position
+        compute elevator2 position - position and set to elevator2
+    else if elevator 2 position < position
+        compute position - elevator2 position and set to elevator2
+    else if elevator3 position > position
+        compute elevator3 position - position and set to elevator3
+    else if elevator 3 position < position
+        compute position - elevator3 position and set to elevator3
+    endif
+
+    if 2 or more values a equal
+        return elevator1
+    else
+        return elevator with smallest value
+endsequence
+
+sequence findSmallestGap2
+    init elevator4 to null
+    init elevator5 to null
+    init elevator6 to null
+
+    if elevator4 position is > position
+        compute elevator4 position - position and set to elevator4
+    else if elevator4 position < position
+        compute position - elevator 4 position and set to elevator4
+    else if elevator5 position > position
+        compute elevator5 position - position and set to elevator5
+    else if elevator 5 position < position
+        compute position - elevator5 position and set to elevator5
+    else if elevator3 position > position
+        compute elevator6 position - position and set to elevator6
+    else if elevator 6 position < position
+        compute position - elevator6 position and set to elevator6
+    endif
+
+    if 2 or more values a equal
+        return elevator4
+    else
+        return elevator with smallest value
+endsequence
+
+sequence findSmallestGap3
+    init elevator7 to null
+    init elevator8 to null
+    init elevator9 to null
+
+    if elevator7 position is > position
+        compute elevator7 position - position and set to elevator7
+    else if elevator7 position < position
+        compute position - elevator7 position and set to elevator7
+    else if elevator8 position > position
+        compute elevator8 position - position and set to elevator8
+    else if elevator 8 position < position
+        compute position - elevator8 position and set to elevator8
+    else if elevator9 position > position
+        compute elevator9 position - position and set to elevator9
+    else if elevator 9 position < position
+        compute position - elevator9 position and set to elevator9
+    endif
+
+    if 2 or more values a equal
+        return elevator7
+    else
+        return elevator with smallest value
+endsequence
+
+sequence findSmallestGap4
+    init elevator10 to null
+    init elevator11 to null
+    init elevator12 to null
+
+    if elevator10 position is > position
+        compute elevator10 position - position and set to elevator10
+    else if elevator10 position < position
+        compute position - elevator10 position and set to elevator10
+    else if elevator11 position > position
+        compute elevator11 position - position and set to elevator11
+    else if elevator 11 position < position
+        compute position - elevator11 position and set to elevator11
+    else if elevator12 position > position
+        compute elevator12 position - position and set to elevator12
+    else if elevator 12 position < position
+        compute position - elevator12 position and set to elevator12
+    endif
+
+    if 2 or more values a equal
+        return elevator10
+    else
+        return elevator with smallest value
+endsequence
+
+'how the elevetor compute how reach the requested floor'
+
+sequence moveElevator using position, floorRequest
+    if floorRequest > position
+        compute floorRequest - position to diff
+            repeat
+                add 1 to posision
+            until elevatorPosition = position + diff
+                return floor
+    else if floorRequest < position
+        compute position - floorRequest to diff
+            repeat
+                add -1 to position
+            until elevatorPosition = position - diff
+                return floor
+    endif
+    call elevatorSpeed
+endsequence
+
+'what the elevator do when requested to open and close the door'
+
+sequence operateDoor using door
+    set door to open
+        if no mouvement set timer to 6 sec then close door
+        else if mouvement is detected set timer to 2 sec after no mouvement is detected then close
+        endif
+endsequence
+
+'how to tell if an elevator is full'
+
+sequence isElevatorFull using scale
+    set maxWeight to 3500
+    if scale detect weight in elevator > maxWeight
+        keep door open AND set overweight light on
+    else do nothing
+endsequence
+
+'how the elevator speed is managed'
+
+sequence elevatorSpeed using elevator
+    if elevator position = floorRequestPosition -1
+        elevator speed = slow
+    else if elevator position = floorRequestPosition +1
+        elevator speed = slow
+    else elevator speed = normal
+    endif
+endsequence
+
+'how to tell the elevators where at what floor to stay while idle'
+
+sequence elevatorSchedule using time, elevators
+     while elevator status = idle
+        if time > 6 AND time < 8
+            set elevator 1 in elevatorList to floor 3
+            set elevator 2 in elevatorList to floor 7
+        else if time > 16 AND time < 18
+            set elevator 1 in elevatorList to floor 1
+            set elevator 2 in elevatorList to floor 1
+        else stay at last requested floor
+        endif
+    endwhile
+endsequence
