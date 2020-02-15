@@ -46,7 +46,7 @@ endsequence
 'what the controller compute to find an elevator'
 
 sequence findElevator using floor, direction, columnAttribution
-    if Column1
+    if column1
         init elevator1 to null
         init elevator2 to null
         init elevator3 to null
@@ -308,14 +308,63 @@ endsequence
 'how to tell the elevators where at what floor to stay while idle'
 
 sequence elevatorSchedule using time, elevators
-     while elevator status = idle
-        if time > 6 AND time < 8
-            set elevator 1 in elevatorList to floor 3
-            set elevator 2 in elevatorList to floor 7
-        else if time > 16 AND time < 18
-            set elevator 1 in elevatorList to floor 1
-            set elevator 2 in elevatorList to floor 1
-        else stay at last requested floor
-        endif
-    endwhile
+    for elevators in column1    
+        while elevator status = idle
+            if time > 6 AND time < 8
+                set elevator1 in elevatorList to floor 1
+                set elevator2 in elevatorList to floor 2
+                set elevator3 in elevatorList to floor 5
+            else if time > 16 AND time < 18
+                set elevator1 in elevatorList to floor 7
+                set elevator2 in elevatorList to floor 7
+                set elevator3 in elevatorList to floor 7
+            else stay at last requested floor
+            endif
+        endwhile
+    endfor
+
+    for elevators in column2
+        while elevator status = idle
+            if time > 6 AND time < 8
+                set elevator4 in elevatorList to floor 7
+                set elevator5 in elevatorList to floor 7
+                set elevator6 in elevatorList to floor 7
+            else if time > 16 AND time < 18
+                set elevator4 in elevatorList to floor 13
+                set elevator5 in elevatorList to floor 19
+                set elevator6 in elevatorList to floor 26
+            else stay at last requested floor
+            endif
+        endwhile
+    endfor
+
+    for elevators in column3
+        while elevator status = idle
+            if time > 6 AND time < 8
+                set elevator7 in elevatorList to floor 7
+                set elevator8 in elevatorList to floor 7
+                set elevator9 in elevatorList to floor 7
+            else if time > 16 AND time < 18
+                set elevator7 in elevatorList to floor 33
+                set elevator8 in elevatorList to floor 40
+                set elevator9 in elevatorList to floor 46
+            else stay at last requested floor
+            endif
+        endwhile
+    endfor
+
+    for elevators in column3
+        while elevator status = idle
+            if time > 6 AND time < 8
+                set elevator10 in elevatorList to floor 7
+                set elevator11 in elevatorList to floor 7
+                set elevator12 in elevatorList to floor 7
+            else if time > 16 AND time < 18
+                set elevator10 in elevatorList to floor 53
+                set elevator11 in elevatorList to floor 60
+                set elevator12 in elevatorList to floor 66
+            else stay at last requested floor
+            endif
+        endwhile
+    endfor
 endsequence

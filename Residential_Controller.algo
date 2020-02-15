@@ -4,6 +4,7 @@ sequence callElevatorButtonOn using call_ elevator button,
     if call elevator button is pressed then
         set button as active
     endif
+    call findElevator using floor, direction
     call elevatorRequest
 endsequence
 
@@ -13,13 +14,6 @@ sequence callElevatorButtonOff using call_ elevator button
     if elevator request is answered then
         set call elevator button as not active
     endif
-endsequence
-
-'when we first request an elevator with call elevator button'
-
-sequence elevatorRequest using floor, directions
-    call findElevator using floor, direction
-    call request using elevator, floor
 endsequence
 
 'what the controller compute to find an elevator'
@@ -42,6 +36,7 @@ sequence findElevator using floor, direction
             set elevator1 to 1
             set elevator2 to 1
         endif
+    endfor
         
     if elevator1 = elevator2 then
         call findSmallestGap
@@ -75,22 +70,21 @@ endsequence
 
 'what the elevator do when it is called when the controller find one after findElevator '
 
-sequence request using floor, direction
-    call moveElevator
+sequence elevatorRequest using floor, direction
+    call moveElevatorToFloor
     when elevator reach requested floor
         call  operateDoor
-    call ElevatorButtonOff
-    call isElevatorFull
+    call callElevatorButtonOff
 endsequence
 
-'how the elevetor compute how reach the requested floor'
+'what the controller compute to make the elevator reach the floor requested by the call elevator button'
 
-sequence moveElevator using position, floorRequest
-    if floorRequest > position
-        compute floorRequest - position to diff
+sequence moveElevatorToFloor using position, elevatorPosition
+    if position > elevatorPosition
+        compute position - elevatorPosition to diff
             repeat
-                add 1 to posision
-            until elevatorPosition = position + diff
+                add 1 to elevatorPosition
+            until elevator Position = position + diff
                 return floor
     else if floorRequest < position
         compute position - floorRequest to diff
@@ -113,23 +107,45 @@ endsequence
 
 'what happen when the floor request button is pressed (inside the elevator)'
 
-sequence requestElevatorButtonOn using request elevator button, 
-    if request elevator button is pressed then
+sequence requestFloorButtonOn using request elevator button, 
+    if request floor button is pressed then
         set button as active
     endif
-    call elevatorRequest
+    call isElevatorFull
+    call moveElevatorToFloorRequest
+
+'what the controller compute to make the elevator reach the floor requested by the floor request button '
+
+sequence moveElevatorToFloorRequest using position, floorRequest
+    if floorRequest > position
+        compute floorRequest - position to diff
+            repeat
+                add 1 to posision
+            until elevatorPosition = position + diff
+                return floor
+    else if floorRequest < position
+        compute position - floorRequest to diff
+            repeat
+                add -1 to position
+            until elevatorPosition = position - diff
+                return floor
+    endif
+    call elevatorSpeed
+    call requestfloorButtonOff
+endsequence
 
 'what happen with the floor request button when the call has been answered'
 
-sequence requestElevatorButtonOff using request elevator button
-    if elevator request is answered then
-        set call elevator button as not active
+sequence requestfloorButtonOff using request elevator button
+    if floor request is answered then
+        set floor request button as not active
     endif
 endsequence
 
 'how to tell if an elevator is full'
 
 sequence isElevatorFull using scale
+    set maxWeight to 3500
     if scale detect weight in elevator > maxWeight
         keep door open AND set overweight light on
     else do nothing
@@ -151,11 +167,11 @@ endsequence
 sequence elevatorSchedule using time, elevators
      while elevator status = idle
         if time > 6 AND time < 8
-            set elevator 1 in elevatorList to floor 3
-            set elevator 2 in elevatorList to floor 7
+            set elevator1 in elevatorList to floor 3
+            set elevator2 in elevatorList to floor 7
         else if time > 16 AND time < 18
-            set elevator 1 in elevatorList to floor 1
-            set elevator 2 in elevatorList to floor 1
+            set elevator1 in elevatorList to floor 1
+            set elevator2 in elevatorList to floor 1
         else stay at last requested floor
         endif
     endwhile
