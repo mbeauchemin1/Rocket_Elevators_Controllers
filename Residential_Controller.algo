@@ -1,10 +1,8 @@
 'what happen when the elevator request button is pressed'
 
-sequence callElevatorButtonOn using call_ elevator button, 
-    if call elevator button is pressed then
-        set button as active
-    endif
-    call findElevator using floor, direction
+sequence requestElevator using requestedFloor AND direction
+    
+    call findElevator using requestedFloor AND direction
     call elevatorRequest
 endsequence
 
@@ -51,15 +49,16 @@ sequence findSmallestGap
     init elevator1 to null
     init elevator2 to null
 
-    if elevator1 position is > position
-        compute elevator1 position - position and set to elevator1
-    else if elevator1 position < position
-        compute position - elevator 1 position and set to elevator1
-    else if elevator2 position > position
-        compute elevator2 position - position and set to elevator2
-    else if elevator 2 position < position
-        compute position - elevator2 position and set to elevator2
-    endif
+    for each elevator in elevatorList
+        if elevator1 position is > position
+            compute elevator1 position - position and set to elevator1
+        else if elevator1 position < position
+            compute position - elevator 1 position and set to elevator1
+        else if elevator2 position > position
+            compute elevator2 position - position and set to elevator2
+        else if elevator 2 position < position
+            compute position - elevator2 position and set to elevator2
+        endif
 
     if elevator1 = elevator2 then
         return elevator1
@@ -70,7 +69,7 @@ endsequence
 
 'what the elevator do when it is called when the controller find one after findElevator '
 
-sequence elevatorRequest using floor, direction
+sequence operateElevator using floor, direction
     call moveElevatorToFloor
     when elevator reach requested floor
         call  operateDoor
