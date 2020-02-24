@@ -118,11 +118,11 @@ function requestFloor (elevator, floor) {
 
 var column1 = new Column('column1', 2, 10)
 
-column1.elevatorList[0].direction = 'idle'
-column1.elevatorList[0].currentFloor = 5
-column1.elevatorList[1].direction = 'up'
-column1.elevatorList[1].currentFloor = 4
+// column1.elevatorList[0].direction = 'idle'
+// column1.elevatorList[0].currentFloor = 5
+// column1.elevatorList[1].direction = 'up'
+// column1.elevatorList[1].currentFloor = 4
 
-var elevator = requestElevator(5, "up")
+// var elevator = requestElevator(5, "up")
 
-requestFloor(elevator, 8)
+// requestFloor(elevator, 8)
