@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Residential_Controller.cs/1.0.0": {
+        "runtime": {
+          "Residential_Controller.cs.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Residential_Controller.cs/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
