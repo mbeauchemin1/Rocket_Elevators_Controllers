@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mattieu\\Desktop\\Residential_Controller.cs\\Residential_Controller.cs.csproj": {}
+    "C:\\Users\\Mattieu\\Desktop\\Commercial_Controller.cs\\Commercial_Controller.cs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mattieu\\Desktop\\Residential_Controller.cs\\Residential_Controller.cs.csproj": {
+    "C:\\Users\\Mattieu\\Desktop\\Commercial_Controller.cs\\Commercial_Controller.cs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mattieu\\Desktop\\Residential_Controller.cs\\Residential_Controller.cs.csproj",
-        "projectName": "Residential_Controller.cs",
-        "projectPath": "C:\\Users\\Mattieu\\Desktop\\Residential_Controller.cs\\Residential_Controller.cs.csproj",
+        "projectUniqueName": "C:\\Users\\Mattieu\\Desktop\\Commercial_Controller.cs\\Commercial_Controller.cs.csproj",
+        "projectName": "Commercial_Controller.cs",
+        "projectPath": "C:\\Users\\Mattieu\\Desktop\\Commercial_Controller.cs\\Commercial_Controller.cs.csproj",
         "packagesPath": "C:\\Users\\Mattieu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mattieu\\Desktop\\Residential_Controller.cs\\obj\\",
+        "outputPath": "C:\\Users\\Mattieu\\Desktop\\Commercial_Controller.cs\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mattieu\\AppData\\Roaming\\NuGet\\NuGet.Config"
