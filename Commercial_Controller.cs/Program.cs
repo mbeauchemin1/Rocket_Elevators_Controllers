@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Commercial_Controller.cs;
 
 namespace Commercial_Controller
 {
@@ -7,7 +6,7 @@ namespace Commercial_Controller
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("ColumnList");
+             ElevatorController Controller = new ElevatorController(66, 4);
         }
     }
 }
