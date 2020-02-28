@@ -9,3 +9,14 @@ C:\Users\Mattieu\Desktop\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commer
 C:\Users\Mattieu\Desktop\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.AssemblyInfo.cs
 C:\Users\Mattieu\Desktop\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.dll
 C:\Users\Mattieu\Desktop\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.pdb
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\bin\Debug\netcoreapp3.1\Commercial_Controller.cs.exe
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\bin\Debug\netcoreapp3.1\Commercial_Controller.cs.deps.json
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\bin\Debug\netcoreapp3.1\Commercial_Controller.cs.runtimeconfig.json
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\bin\Debug\netcoreapp3.1\Commercial_Controller.cs.runtimeconfig.dev.json
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\bin\Debug\netcoreapp3.1\Commercial_Controller.cs.dll
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\bin\Debug\netcoreapp3.1\Commercial_Controller.cs.pdb
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.csprojAssemblyReference.cache
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.AssemblyInfoInputs.cache
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.AssemblyInfo.cs
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.dll
+C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.pdb
