@@ -7,7 +7,7 @@ namespace Commercial_Controller
     public class Battery
     {
         public int nbColumns;
-        public List<Column> columnList;
+        public static List<Column> columnList;
 
         public Battery(int nbColumns, int nbFloors, int nbElevators)
         {
@@ -22,34 +22,33 @@ namespace Commercial_Controller
             }
 
         }
-        public Column findColumn(int requestedFloor, int floorNumber)
+        public static Column findColumn(int requestedFloor, int floorNumber)
         {
             Column bestColumn = null;
-            if (requestedFloor < 1 && requestedFloor > 6 || floorNumber == 1)
+            if (floorNumber == 7 && requestedFloor >= 1 && requestedFloor <= 6 || floorNumber >= 1 && floorNumber <=6 && requestedFloor == 7)
             {
                 bestColumn = columnList[0];
             }
-            else if (requestedFloor >= 8 && requestedFloor <=26 || floorNumber == 1)
+            else if (floorNumber == 7 && requestedFloor >= 8 && requestedFloor <=26 || floorNumber >= 8 && floorNumber <= 26 && requestedFloor == 7)
             {
                 bestColumn = columnList[1];
             }
-            else if(requestedFloor >= 27 && requestedFloor <= 46 || floorNumber ==1)
+            else if(floorNumber == 7 && requestedFloor >= 27 && requestedFloor <= 46 || floorNumber >= 27 && floorNumber <= 46 && requestedFloor ==7)
             {
                 bestColumn = columnList[2];
             }
-            else if (requestedFloor >= 47 && requestedFloor <= 66)
+            else if (floorNumber ==7 && requestedFloor >= 47 && requestedFloor <= 66 || floorNumber >= 47 && floorNumber <= 66 && requestedFloor ==7)
             {
                 bestColumn = columnList[3];
             }
-
             return bestColumn;
         }
-
     }
     
     //column creates elevators, find best elevator
      public class Column
     {
+        public int bestElevator = Battery.findElevator();
         public int id;
         public int nbFloors;
         public int nbElevators;
@@ -62,35 +61,106 @@ namespace Commercial_Controller
             for (int i = 1; i <= nbElevators; i++)
             {
                 elevatorList = new List<Elevator>();
-                Elevator elevator = new Elevator(i, nbFloors);
+                Elevator elevator = new Elevator(i);
                 elevatorList.Add(elevator);
                 System.Console.WriteLine("this is elevator " + elevator.id);
             }
         }
 
-        public Elevator findElevator(int requestedFloor)
+        public Elevator findElevator(int requestedFloor, int floorNumber, string direction, int userPosition, int elevatorCurrentFloor, int Battery)
         {
             int bestCase = 0;
+
             Elevator bestElevator = null;
 
-            foreach (Elevator i in elevatorList)
+            if  (columnList[0])
             {
-                if()
+                foreach (Elevator i in elevatorList)   
+                {
+                    if (requestedFloor < 7 && direction == "down" && elevatorCurrentFloor == 7 || floorNumber == 7 && direction == "up" && elevatorCurrentFloor <= userPosition)
+                    {
+                        bestCase = 4;
+                        bestElevator = i;
+                    }
+                    else if (requestedFloor < 7 && direction == "idle" && elevatorCurrentFloor == 7 || floorNumber == 7 && direction == "idle " && elevatorCurrentFloor == userPosition)
+                    {
+                        if (bestCase < 3)
+                        {
+                            bestCase = 3;
+                            bestElevator = i;
+                        }       
+                    }
+                    else if (requestedFloor < 7 && direction == "idle " && elevatorCurrentFloor != 7 || floorNumber == 7 && direction == "idle" && elevatorCurrentFloor != userPosition)
+                    {
+                        if (bestCase < 2)
+                        {
+                            bestCase = 2;
+                            bestElevator = i;
+                        }
+                        
+                    }    
+                    else
+                    {
+                        if (bestCase < 1)
+                        {
+                            bestCase = 1;
+                            bestElevator = i;
+                        }
+                    }
+                }
             }
-
+            else
+            {
+                foreach (Elevator i in elevatorList)
+                {
+                    if (requestedFloor > 7 && direction == "up" && elevatorCurrentFloor == 7 || floorNumber == 7 && direction == "down" && elevatorCurrentFloor >= userPosition)
+                    {
+                        bestCase = 4;
+                        bestElevator = i;
+                    }
+                    else if (requestedFloor > 7 && direction == "idle" && elevatorCurrentFloor == 7 || floorNumber == 7 && direction == "idle " && elevatorCurrentFloor == userPosition)
+                    {
+                        if (bestCase < 3)
+                        {
+                            bestCase = 3;
+                            bestElevator = i;
+                        }  
+                    }
+                    else if (requestedFloor > 7 && direction == "idle " && elevatorCurrentFloor != 7 || floorNumber == 7 && direction == "idle" && elevatorCurrentFloor != userPosition)
+                    {
+                        if (bestCase < 2)
+                        {
+                            bestCase = 2;
+                            bestElevator = i;
+                        }
+                    }
+                    else
+                    {
+                        if (bestCase < 1)
+                        {
+                            bestCase = 1;
+                            bestElevator = i;
+                        }
+                    }
+                }
+            }
+            return bestElevator;
         }
-
     }
-    
+
     public class Elevator
     {
-        public int nbFloors;
         public int id;
+        public int nbFloors;
+        public  int currentFloor;
+        public string direction;
+
         
-        public Elevator(int id, int nbFloors)
+        public Elevator(int id)
         {
             this.id = id;
-            this.nbFloors = nbFloors;
+            this.direction = "idle";
+            this.currentFloor = 7;
         }
 
     }
