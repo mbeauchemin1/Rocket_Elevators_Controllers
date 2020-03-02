@@ -20,3 +20,8 @@ C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\D
 C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.AssemblyInfo.cs
 C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.dll
 C:\Program Files\Git\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.pdb
+C:\Users\14185\Documents\GitHub\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.csprojAssemblyReference.cache
+C:\Users\14185\Documents\GitHub\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.AssemblyInfoInputs.cache
+C:\Users\14185\Documents\GitHub\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.AssemblyInfo.cs
+C:\Users\14185\Documents\GitHub\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.dll
+C:\Users\14185\Documents\GitHub\Rocket_Elevators_Controllers\Commercial_Controller.cs\obj\Debug\netcoreapp3.1\Commercial_Controller.cs.pdb

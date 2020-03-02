@@ -22,7 +22,7 @@ namespace Commercial_Controller
             }
 
         }
-        public static Column findColumn(int requestedFloor, int floorNumber)
+        public Column findColumn(int requestedFloor, int floorNumber)
         {
             Column bestColumn = null;
             if (floorNumber == 7 && requestedFloor >= 1 && requestedFloor <= 6 || floorNumber >= 1 && floorNumber <=6 && requestedFloor == 7)
@@ -48,7 +48,6 @@ namespace Commercial_Controller
     //column creates elevators, find best elevator
      public class Column
     {
-        public int bestElevator = Battery.findElevator();
         public int id;
         public int nbFloors;
         public int nbElevators;
@@ -67,13 +66,13 @@ namespace Commercial_Controller
             }
         }
 
-        public Elevator findElevator(int requestedFloor, int floorNumber, string direction, int userPosition, int elevatorCurrentFloor, int Battery)
+        public Elevator findElevator(int requestedFloor, int floorNumber, string direction, int userPosition, int elevatorCurrentFloor)
         {
             int bestCase = 0;
 
             Elevator bestElevator = null;
 
-            if  (columnList[0])
+            if (Battery.findColumn(requestedFloor,floorNumber).bestColumn =[0])
             {
                 foreach (Elevator i in elevatorList)   
                 {
@@ -146,7 +145,7 @@ namespace Commercial_Controller
             }
             return bestElevator;
         }
-    }
+
 
     public class Elevator
     {
@@ -161,6 +160,18 @@ namespace Commercial_Controller
             this.id = id;
             this.direction = "idle";
             this.currentFloor = 7;
+        }
+
+        public void operateElevator(int floor)
+        {
+            while(this.currentFloor < floor)
+            {
+                this.currentFloor ++;
+            }
+            while(this.currentFloor > floor)
+            {
+                this.currentFloor --;
+            }
         }
 
     }
